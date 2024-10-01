@@ -6,7 +6,8 @@ from time import sleep
 
 
 #get mini game galgje
-from galgje import galgje
+from games.galgje import galgje
+from games.rock_paper_scissors import rock_paper_scissors
 
 # printing rules of the game in console
 def print_rules() -> None:
@@ -15,7 +16,7 @@ def print_rules() -> None:
 
 # greeting the user
 def greet_user() -> None:
-    print(f"Hello {user_name}!")
+    print(f"Hello {USER_NAME}!")
     sleep(2)
 
     print('\nDo you want to play a game? :} ')
@@ -119,31 +120,38 @@ def get_action() -> int:
 
 # play game binarize
 def play_binarize(game_mode) -> bool:
-    print('U are playing Binarize')
+    print_game_rules('binarize')
     return False
 
 
 # play game rock, paper and scissors
 def play_rock_paper_scissors(game_mode) -> bool:
-    print('Play rock_paper_scissors')
+    print_game_rules('rock_paper_scissors')
+
+    if rock_paper_scissors(game_mode, USER_NAME):
+        print('\nNot bad, be aware u are not done yet!')
+        print('Here is your letter: B')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        print('\nHow do u feel to be an loser?')
+
+        sleep(1)
+        print('U are close to die!')
+        sleep(1)
+
     return False
 
 
 # play game encrypter
 def play_encrypter(game_mode) -> bool:
-    print('Play play_encrypter')
+    print_game_rules('encrypter')
     return False
 
 # plat game galley
 def play_galley(game_mode) -> bool:
-    print("\nRULES OF THE GAME:")
-    print("U have 7 attempts to guess the word.")
-    print("If u guess the word correctly within 7 attempts, you get 1 letter")
-    print("Otherwise U DIE!")
-
-    sleep(1)
-    print("\nLets start the game :)")
-    sleep(2)
+    print_game_rules('galley')
 
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
@@ -156,9 +164,8 @@ def play_galley(game_mode) -> bool:
 
         sleep(1)
         print('U are close to die!')
-
         sleep(1)
-        return False
+    return False
 
 # plat game math champ
 def play_math_champ(game_mode) -> bool:
@@ -171,18 +178,21 @@ def print_heading(heading) -> None:
     print(f'\n\033[95m{heading}\033[0m')
 
 
+def print_game_rules(game_name) -> None:
+    # todo print here the rules of each game
+
+    sleep(1)
+    print("\nLets start the game :)")
+    sleep(2)
+
+
 # processing the game end
 def end_game() -> None:
     pass
 
 
 # processing the gameplay
-def start_game() -> int:
-    sleep(1)
-    # ask for game mode easy, medium or hard
-    game_mode = get_game_mode()
-    sleep(1)
-
+def start_game(game_mode) -> int:
     # total score gained while playing
     total_score = 0
 
@@ -236,16 +246,19 @@ if __name__ == '__main__':
         }
     }
 
-    user_name = get_user_name()
-    greet_user()
-
-    sleep(2)
-    print_rules()
-
-    sleep(2)
+    USER_NAME = get_user_name()
     while True:
         played_games = []
         action = get_action()
+
+        sleep(1)
+        # ask for game mode easy, medium or hard
+        game_mode = get_game_mode()
+        sleep(1)
+
+        greet_user()
+        sleep(2)
+        print_rules()
 
         if action == 3:
             print('\033[91mWe know that u are scared!\033[0m')
@@ -256,7 +269,7 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
-            score = start_game()
+            score = start_game(game_mode)
             enter_password = enter_password()
             end_game()
         else:
