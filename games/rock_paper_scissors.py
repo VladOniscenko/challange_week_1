@@ -23,10 +23,8 @@ def rock_paper_scissors(game_mode, user_name) -> bool:
         print(f'You chose \033[95m{user_selection}\033[0m and I chose \033[95m{random_option}\033[0m.')
 
         if (user_selection == "rock" and random_option == "scissors") or (user_selection == "paper" and random_option == "rock") or (user_selection == "scissors" and random_option == "paper"):
-            print(f'\033[92mU won this time!\033[0m')
             return True
         else:
-            print(f'\033[91mU lost this time!\033[0m')
             continue
 
     return False
