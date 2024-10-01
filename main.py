@@ -1,6 +1,3 @@
-# import only system from os
-from os import system, name
-
 # import sleep to show output for some time period
 from time import sleep
 
@@ -8,6 +5,7 @@ from time import sleep
 #get mini game galgje
 from games.galgje import galgje
 from games.rock_paper_scissors import rock_paper_scissors
+
 
 # printing rules of the game in console
 def print_rules() -> None:
@@ -270,7 +268,7 @@ if __name__ == '__main__':
             print_scoreboard()
         elif action == 1:
             score = start_game(game_mode)
-            enter_password = enter_password()
+            get_password = enter_password()
             end_game()
         else:
             continue
