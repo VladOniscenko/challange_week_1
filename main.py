@@ -8,15 +8,12 @@ from time import sleep
 #get mini game galgje
 from galgje import galgje
 
-
-def get_user_name() -> str:
-    return input("Enter your name: ").strip()
-
-
+# printing rules of the game in console
 def print_rules() -> None:
     print('Here come the rules of the game')
 
 
+# greeting the user
 def greet_user() -> None:
     print(f"Hello {user_name}!")
     sleep(2)
@@ -32,36 +29,42 @@ def greet_user() -> None:
         print('\nNo one cares what u want!')
 
 
+# checking if selected action is valid
 def validate_action(action: str) -> bool:
     if action.isdigit() and int(action) in [1, 2, 3]:
         return True
     return False
 
 
+# checking if selected game mode is valid
 def validate_game_mode(game_mode: str) -> bool:
     if game_mode.isdigit() and int(game_mode) in [1, 2, 3]:
         return True
     return False
 
 
-def get_action() -> int:
-    print_heading('Make an decision: (1 - 3)')
-    print('1: Start new game')
-    print('2: See scoreboard')
-    print('3: Quit')
+# checking if selected game is not already played and is valid
+def validate_selected_game(game_names, game_number) -> bool:
 
-    action = input('\nEnter your choice: ')
-    if not validate_action(action):
-        print('Input error')
-        return get_action()
+    if not game_number.isdigit() or len(game_names) < int(game_number) - 1 or not game_names[int(game_number) - 1]:
+        return False
 
-    return int(action)
+    selected_game = game_names[int(game_number) - 1]
+    if selected_game in played_games:
+        return False
+
+    return True
 
 
+# ask user his name and return to main
+def get_user_name() -> str:
+    return input("Enter your name: ").strip()
+
+# printing the scoreboard
 def print_scoreboard() -> None:
     print('Here comes the scoreboard')
 
-
+# ask user for preferred game mode [easy, medium, hard]
 def get_game_mode() -> str:
     print_heading('Select your game mode: (1 - 3)')
     print('1: Easy')
@@ -75,64 +78,7 @@ def get_game_mode() -> str:
     return GAME_MODES[int(game_mode)].lower()
 
 
-def play_binarize() -> bool:
-    print('U are playing Binarize')
-    return False
-
-def play_rock_paper_scissors() -> bool:
-    print('Play rock_paper_scissors')
-    return False
-
-
-def play_encrypter() -> bool:
-    print('Play play_encrypter')
-    return False
-
-
-def play_galley(game_mode) -> bool:
-    print("\nRULES OF THE GAME:")
-    print("U have 10 attempts to guess the word.")
-    print("If u guess the word correctly within 10 attempts, you get 1 point")
-    print("Otherwise U DIE!")
-    print("")
-    print("")
-    print("Lets start the game :)")
-    sleep(2)
-
-    if galgje(game_mode):
-        print('\nHmm, you got me this time, it will not happen again!')
-        return True
-    else:
-        print('\nHow do u feel to be an loser?')
-
-        sleep(1)
-        print('U are close to die!')
-
-        sleep(1)
-        return False
-
-
-def play_math_champ() -> bool:
-    print('Play play_math_champ')
-    return False
-
-
-def validate_selected_game(game_names, game_number) -> bool:
-
-    if not game_number.isdigit() or len(game_names) < int(game_number) - 1 or not game_names[int(game_number) - 1]:
-        return False
-
-    selected_game = game_names[int(game_number) - 1]
-    if selected_game in played_games:
-        return False
-
-    return True
-
-
-def print_heading(heading) -> None:
-    print(f'\n\033[95m{heading}\033[0m')
-
-
+# ask user for the mini-game that he want to play
 def get_mini_game():
     print_heading(f'Pick an mini game: (1 - {len(MINI_GAMES)})')
     game_names = []
@@ -156,10 +102,78 @@ def get_mini_game():
     return MINI_GAMES[game_names[int(game_number) - 1]]['game']
 
 
+# ask user what he want to do next
+def get_action() -> int:
+    print_heading('Make an decision: (1 - 3)')
+    print('1: Start new game')
+    print('2: See scoreboard')
+    print('3: Quit')
+
+    action = input('\nEnter your choice: ')
+    if not validate_action(action):
+        print('Input error')
+        return get_action()
+
+    return int(action)
+
+
+# play game binarize
+def play_binarize() -> bool:
+    print('U are playing Binarize')
+    return False
+
+
+# play game rock, paper and scissors
+def play_rock_paper_scissors() -> bool:
+    print('Play rock_paper_scissors')
+    return False
+
+
+# play game encrypter
+def play_encrypter() -> bool:
+    print('Play play_encrypter')
+    return False
+
+# plat game galley
+def play_galley(game_mode) -> bool:
+    print("\nRULES OF THE GAME:")
+    print("U have 10 attempts to guess the word.")
+    print("If u guess the word correctly within 10 attempts, you get 1 point")
+    print("Otherwise U DIE!")
+    print("")
+    print("")
+    print("Lets start the game :)")
+    sleep(2)
+
+    if galgje(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        return True
+    else:
+        print('\nHow do u feel to be an loser?')
+
+        sleep(1)
+        print('U are close to die!')
+
+        sleep(1)
+        return False
+
+# plat game math champ
+def play_math_champ() -> bool:
+    print('Play play_math_champ')
+    return False
+
+
+# prints the heading in selected color
+def print_heading(heading) -> None:
+    print(f'\n\033[95m{heading}\033[0m')
+
+
+# processing the game end
 def end_game() -> None:
-    print('\nU are a noob u lost!')
+    pass
 
 
+# processing the gameplay
 def start_game() -> None:
     # ask for game mode easy, medium or hard
     game_mode = get_game_mode()
