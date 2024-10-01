@@ -1,13 +1,12 @@
-# import only system from os
-from os import system, name
-
 # import sleep to show output for some time period
 from time import sleep
 
 
-#get mini game galgje
+# import mini games
 from games.galgje import galgje
+from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
+
 
 # printing rules of the game in console
 def print_rules() -> None:
@@ -127,20 +126,14 @@ def play_binarize(game_mode) -> bool:
 # play game rock, paper and scissors
 def play_rock_paper_scissors(game_mode) -> bool:
     print_game_rules('rock_paper_scissors')
-
     if rock_paper_scissors(game_mode, USER_NAME):
-        print('\nNot bad, be aware u are not done yet!')
-        print('Here is your letter: B')
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
         sleep(1)
-        print('U are close to die!')
-        sleep(1)
-
     return False
 
 
@@ -152,24 +145,27 @@ def play_encrypter(game_mode) -> bool:
 # plat game galley
 def play_galley(game_mode) -> bool:
     print_game_rules('galley')
-
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: A')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
-        sleep(1)
-        print('U are close to die!')
         sleep(1)
     return False
 
 # plat game math champ
 def play_math_champ(game_mode) -> bool:
-    print('Play play_math_champ')
+    print_game_rules('math_champ')
+    if math_champ(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        sleep(1)
     return False
 
 
@@ -179,11 +175,11 @@ def print_heading(heading) -> None:
 
 
 def print_game_rules(game_name) -> None:
-    # todo print here the rules of each game
+    print(f'\033[93m{MINI_GAMES[game_name]["rules"]}\033[0m')
 
-    sleep(1)
+    sleep(4)
     print("\nLets start the game :)")
-    sleep(2)
+    sleep(1)
 
 
 # processing the game end
@@ -207,7 +203,10 @@ def start_game(game_mode) -> int:
         user_won = mini_game(game_mode)
 
         if user_won:
+            print(f'\033[92mU won this time!\033[0m')
             total_score += 1
+        else:
+            print(f'\033[91mU lost this time!\033[0m')
 
     return total_score
 
@@ -227,22 +226,38 @@ if __name__ == '__main__':
         'binarize': {
             'name': 'Binarize',
             'game': play_binarize,
+            'rules': 'In Binarize, you are tasked with converting decimal numbers into binary. \n'
+                     'You will be given random decimal numbers, and your job is to accurately convert \n'
+                     'them to their binary equivalents. Test your knowledge of binary conversions\n'
         },
         'encrypter': {
             'name': 'Encrypter',
             'game': play_encrypter,
+            'rules': 'Encrypter challenges you to decode or encode a given string using a specific encryption method, \n'
+                     'like Caesar cipher or a substitution cipher. Your goal is to either crack the encrypted message \n'
+                     'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
         },
         'galley': {
-            'name': 'Galley',
+            'name': 'Galgje',
             'game': play_galley,
+            'rules': 'Galgje is the Dutch version of Hangman. The objective is to guess a hidden word by suggesting letters. \n'
+                     'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
+                     'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
         },
         'math_champ': {
             'name': 'Math Champ',
             'game': play_math_champ,
+            'rules': 'In Math Champ, you will face equations like A + A = 4 or B + A = 7. Your task is to deduce the values \n'
+                     'of the variables (A, B, etc.) by solving these equations. The game will challenge your logical thinking \n'
+                     'and problem-solving skills as you figure out the correct values for the variables!\n'
+
         },
         'rock_paper_scissors': {
             'name': 'Rock Paper Scissors',
             'game': play_rock_paper_scissors,
+            'rules': 'Rock Paper Scissors is a classic game of chance where you play against the computer. \n'
+                     'Choose rock, paper, or scissors and see if you can outwit the computer. Rock beats scissors, \n'
+                     'scissors beats paper, and paper beats rock. Win the best of three rounds to claim victory!\n'
         }
     }
 
@@ -252,13 +267,6 @@ if __name__ == '__main__':
         action = get_action()
 
         sleep(1)
-        # ask for game mode easy, medium or hard
-        game_mode = get_game_mode()
-        sleep(1)
-
-        greet_user()
-        sleep(2)
-        print_rules()
 
         if action == 3:
             print('\033[91mWe know that u are scared!\033[0m')
@@ -269,8 +277,18 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
+            # ask for game mode easy, medium or hard
+            game_mode = get_game_mode()
+            sleep(1)
+
+            greet_user()
+            sleep(2)
+            print_rules()
+
             score = start_game(game_mode)
-            enter_password = enter_password()
+
+            print(f'TOTAL SCORE: {score}')
+            get_password = enter_password()
             end_game()
         else:
             continue
