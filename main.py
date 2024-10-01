@@ -198,6 +198,7 @@ if __name__ == '__main__':
         2: 'Medium',
         3: 'Hard'
     }
+
     MINI_GAMES = {
         'binarize': {
             'name': 'Binarize',
