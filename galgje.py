@@ -1,4 +1,4 @@
-def galgje() -> bool:
+def galgje(game_mode) -> bool:
     correct_chars, incorrect_chars = [], []
 
     # check if all character are guessed / return true/false || win/or not yet
@@ -33,11 +33,26 @@ def galgje() -> bool:
         print(''.join(srow))
         print(''.join(throw))
 
-    attempts = 5
+    attempts = 10
     i = 0
 
-    # while loop until I get valid input
-    word = "vlad"
+    import random
+
+    # Galgje game modes
+    galgje_modes = {
+        'easy': {
+            'words': ['cat', 'dog', 'hat', 'sun', 'ball'],
+        },
+        'medium': {
+            'words': ['jungle', 'monkey', 'puzzle', 'bridge', 'shadow'],
+        },
+        'hard': {
+            'words': ['pneumonia', 'subterranean', 'juxtaposition', 'xylophone', 'quizzical'],
+        }
+    }
+
+    # Get a random word from the selected game mode
+    word = random.choice(galgje_modes[game_mode]['words'])
 
     print_ans(word, correct_chars)
 
@@ -68,16 +83,14 @@ def galgje() -> bool:
         else:
 
             if attempt in incorrect_chars:
-                i = i - 1
                 print(attempt + " was already used!")
             else:
                 incorrect_chars.append(attempt)
                 print("AHH, " + attempt + " is not in the word!")
-
+                i += 1
         # print attempt results
         print_ans(word, correct_chars)
 
-        i += 1
 
     # display game results
     if user_guessed(word, correct_chars):
