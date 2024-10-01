@@ -118,35 +118,38 @@ def get_action() -> int:
 
 
 # play game binarize
-def play_binarize() -> bool:
+def play_binarize(game_mode) -> bool:
     print('U are playing Binarize')
     return False
 
 
 # play game rock, paper and scissors
-def play_rock_paper_scissors() -> bool:
+def play_rock_paper_scissors(game_mode) -> bool:
     print('Play rock_paper_scissors')
     return False
 
 
 # play game encrypter
-def play_encrypter() -> bool:
+def play_encrypter(game_mode) -> bool:
     print('Play play_encrypter')
     return False
 
 # plat game galley
 def play_galley(game_mode) -> bool:
     print("\nRULES OF THE GAME:")
-    print("U have 10 attempts to guess the word.")
-    print("If u guess the word correctly within 10 attempts, you get 1 point")
+    print("U have 7 attempts to guess the word.")
+    print("If u guess the word correctly within 7 attempts, you get 1 letter")
     print("Otherwise U DIE!")
-    print("")
-    print("")
-    print("Lets start the game :)")
+
+    sleep(1)
+    print("\nLets start the game :)")
     sleep(2)
 
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: A')
+        print('Don\'t forget it :}')
+        sleep(2)
         return True
     else:
         print('\nHow do u feel to be an loser?')
@@ -158,7 +161,7 @@ def play_galley(game_mode) -> bool:
         return False
 
 # plat game math champ
-def play_math_champ() -> bool:
+def play_math_champ(game_mode) -> bool:
     print('Play play_math_champ')
     return False
 
@@ -174,9 +177,14 @@ def end_game() -> None:
 
 
 # processing the gameplay
-def start_game() -> None:
+def start_game() -> int:
+    sleep(1)
     # ask for game mode easy, medium or hard
     game_mode = get_game_mode()
+    sleep(1)
+
+    # total score gained while playing
+    total_score = 0
 
     while True:
         if len(played_games) == len(MINI_GAMES):
@@ -191,14 +199,20 @@ def start_game() -> None:
         if user_won:
             total_score += 1
 
+    return total_score
+
+def enter_password() -> None:
+    pass
 
 if __name__ == '__main__':
+    # all game-modes that we support
     GAME_MODES = {
         1: 'Easy',
         2: 'Medium',
         3: 'Hard'
     }
 
+    # all mini-games that we have
     MINI_GAMES = {
         'binarize': {
             'name': 'Binarize',
@@ -242,9 +256,8 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
-            total_score = 0
-
-            start_game()
+            score = start_game()
+            enter_password = enter_password()
             end_game()
         else:
             continue
