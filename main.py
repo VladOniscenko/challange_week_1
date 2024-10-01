@@ -1,11 +1,19 @@
 # import sleep to show output for some time period
 from time import sleep
-
+import csv
 
 # import mini games
 from games.galgje import galgje
 from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
+
+def save_score(score):
+    time = '9:54'
+
+    # Open the file in append mode and write the data
+    with open('scoreboard.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([USER_NAME, score, time])
 
 
 # printing rules of the game in console
@@ -62,7 +70,21 @@ def get_user_name() -> str:
 
 # printing the scoreboard
 def print_scoreboard() -> None:
-    print('Here comes the scoreboard')
+    print_heading('Scoreboard: ')
+    with open('scoreboard.csv', mode='r') as file:
+        # Read the data into a list and skip the header
+        data = list(csv.reader(file))
+
+    # Sort the data by score (second column), converting scores to integers
+    sorted_data = sorted(data, key=lambda x: int(x[1]), reverse=True)
+
+    # Print table header
+    print(f"{'Name':<15} {'Score':<10} {'Time':<10}")
+    print("-" * 35)
+
+    # Print each row in a formatted way
+    for row in sorted_data:
+        print(f"{row[0]:<15} {row[1]:<10} {row[2]:<10}")
 
 # ask user for preferred game mode [easy, medium, hard]
 def get_game_mode() -> str:
@@ -116,6 +138,8 @@ def get_action() -> int:
 
     return int(action)
 
+def get_score(games_won: int) -> int:
+    return games_won * 250
 
 # play game binarize
 def play_binarize(game_mode) -> bool:
@@ -203,10 +227,10 @@ def start_game(game_mode) -> int:
         user_won = mini_game(game_mode)
 
         if user_won:
-            print(f'\033[92mU won this time!\033[0m')
+            print(f'\033[92mU won mini-game, this time!\033[0m')
             total_score += 1
         else:
-            print(f'\033[91mU lost this time!\033[0m')
+            print(f'\033[91mU lost this mini-game!\033[0m')
 
     return total_score
 
@@ -238,9 +262,9 @@ if __name__ == '__main__':
                      'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
         },
         'galley': {
-            'name': 'Galgje',
+            'name': 'Hangman',
             'game': play_galley,
-            'rules': 'Galgje is the Dutch version of Hangman. The objective is to guess a hidden word by suggesting letters. \n'
+            'rules': 'The objective is to guess a hidden word by suggesting letters. \n'
                      'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
                      'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
         },
@@ -285,9 +309,11 @@ if __name__ == '__main__':
             sleep(2)
             print_rules()
 
-            score = start_game(game_mode)
+            games_won = start_game(game_mode)
+            score = get_score(games_won)
 
-            print(f'TOTAL SCORE: {score}')
+            save_user_score = save_score(score)
+
             get_password = enter_password()
             end_game()
         else:
