@@ -23,10 +23,12 @@ def rock_paper_scissors(game_mode, user_name) -> bool:
         print(f'You chose \033[95m{user_selection}\033[0m and I chose \033[95m{random_option}\033[0m.')
 
         if (user_selection == "rock" and random_option == "scissors") or (user_selection == "paper" and random_option == "rock") or (user_selection == "scissors" and random_option == "paper"):
-            print(f'\033[92U won it!\033[0m')
+            print(f'\033[92mYou won it!\033[0m')
+            sleep(2)
             return True
         else:
-            print(f'\033[91U lost it!\033[0m')
+            print(f'\033[91mYou lost it!\033[0m')
+            sleep(2)
             continue
 
     return False
@@ -61,4 +63,4 @@ def print_heading(heading) -> None:
 
 
 if __name__ == '__main__':
-    rock_paper_scissors('easy', 'vlad')
+    rock_paper_scissors('hard', 'vlad')
