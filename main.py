@@ -4,15 +4,20 @@ from os import system, name
 # import sleep to show output for some time period
 from time import sleep
 
-def get_user_name():
+
+#get mini game galgje
+from galgje import galgje
+
+
+def get_user_name() -> str:
     return input("Enter your name: ").strip()
 
 
-def print_rules():
+def print_rules() -> None:
     print('Here come the rules of the game')
 
 
-def greet_user():
+def greet_user() -> None:
     print(f"Hello {user_name}!")
     sleep(2)
 
@@ -53,7 +58,7 @@ def get_action() -> int:
     return int(action)
 
 
-def print_scoreboard():
+def print_scoreboard() -> None:
     print('Here comes the scoreboard')
 
 
@@ -70,8 +75,46 @@ def get_game_mode() -> str:
     return GAME_MODES[int(game_mode)].lower()
 
 
-def play_binarize():
+def play_binarize() -> bool:
     print('U are playing Binarize')
+    return False
+
+def play_rock_paper_scissors() -> bool:
+    print('Play rock_paper_scissors')
+    return False
+
+
+def play_encrypter() -> bool:
+    print('Play play_encrypter')
+    return False
+
+
+def play_galley(game_mode) -> bool:
+    print("\nRULES OF THE GAME:")
+    print("U have 10 attempts to guess the word.")
+    print("If u guess the word correctly within 10 attempts, you get 1 point")
+    print("Otherwise U DIE!")
+    print("")
+    print("")
+    print("Lets start the game :)")
+    sleep(2)
+
+    if galgje(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        return True
+    else:
+        print('\nHow do u feel to be an loser?')
+
+        sleep(1)
+        print('U are close to die!')
+
+        sleep(1)
+        return False
+
+
+def play_math_champ() -> bool:
+    print('Play play_math_champ')
+    return False
 
 
 def validate_selected_game(game_names, game_number) -> bool:
@@ -86,7 +129,7 @@ def validate_selected_game(game_names, game_number) -> bool:
     return True
 
 
-def print_heading(heading):
+def print_heading(heading) -> None:
     print(f'\n\033[95m{heading}\033[0m')
 
 
@@ -113,11 +156,11 @@ def get_mini_game():
     return MINI_GAMES[game_names[int(game_number) - 1]]['game']
 
 
-def end_game():
+def end_game() -> None:
     print('\nU are a noob u lost!')
 
 
-def start_game():
+def start_game() -> None:
     # ask for game mode easy, medium or hard
     game_mode = get_game_mode()
 
@@ -127,44 +170,12 @@ def start_game():
 
         # let the user select an mini game
         mini_game = get_mini_game()
-        user_won = mini_game()
+
+        # let user play the game
+        user_won = mini_game(game_mode)
 
         if user_won:
             total_score += 1
-
-def play_rock_paper_scissors():
-    print('Play rock_paper_scissors')
-
-
-def play_encrypter():
-    print('Play play_encrypter')
-
-
-def play_galley():
-    player_won = False
-
-    print("\nRULES OF THE GAME:")
-    print("U have 9 attempts to guess the word.")
-    print("If u guess the word correctly within 9 attempts, you get 1 point")
-    print("Otherwise U DIE!")
-    print("")
-    print("")
-    print("Lets start the game :)")
-
-    import galgje
-
-    if player_won:
-        print('Hmm, you got me this time, it will not happen again!')
-        return True
-    else:
-        print('How do u feel to be an loser?')
-
-        sleep(2)
-        print('U are close to die!')
-        return False
-
-def play_math_champ():
-    print('Play play_math_champ')
 
 
 if __name__ == '__main__':
