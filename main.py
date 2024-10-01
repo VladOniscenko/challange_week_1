@@ -1,3 +1,9 @@
+# todo fix time in scoreboard
+# todo print something after password input correct or incorrect?
+# todo we need to replace an X from won games to real letters from the password
+
+
+
 # import sleep to show output for some time period
 import time
 from time import sleep
@@ -267,12 +273,6 @@ def print_game_rules(game_name) -> None:
     print("\nLets start the game :)")
     sleep(1)
 
-
-# processing the game end
-def end_game() -> None:
-    pass
-
-
 # processing the gameplay
 def start_game(game_mode) -> int:
     # total score gained while playing
@@ -388,6 +388,7 @@ if __name__ == '__main__':
 
             if enter_password():
                 games_won += 10
+                # todo print some text
 
             end_time = time.time()
 
@@ -396,7 +397,5 @@ if __name__ == '__main__':
 
             # save the score
             save_user_score = save_score(score, end_time - start_time, game_mode)
-
-            end_game()
         else:
             continue
