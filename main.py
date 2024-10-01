@@ -1,7 +1,7 @@
 # todo fix time in scoreboard
 # todo print something after password input correct or incorrect?
 # todo we need to replace an X from won games to real letters from the password
-
+# todo import 2 other mini games
 
 
 # import sleep to show output for some time period
