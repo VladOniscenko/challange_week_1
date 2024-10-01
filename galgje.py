@@ -33,7 +33,7 @@ def galgje(game_mode) -> bool:
         print(''.join(srow))
         print(''.join(throw))
 
-    attempts = 10
+    attempts = 7
     i = 0
 
     import random
