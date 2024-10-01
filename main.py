@@ -1,24 +1,86 @@
 # import sleep to show output for some time period
+import time
 from time import sleep
-
+import csv
 
 # import mini games
 from games.galgje import galgje
 from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
 
+def save_score(score: int, time: float, game_mode: str) -> None:
+    # Open the file in append mode and write the data
+    with open('scoreboard.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([USER_NAME, score, int(time), game_mode])
 
 # printing rules of the game in console
-def print_rules() -> None:
-    print('Here come the rules of the game')
+def print_rules():
+    red = '\033[91m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    reset = '\033[0m'
+    green = '\033[92m'
+
+    # Game rules
+    rules = (
+        f"{red}Game rules:{reset}\n"
+        f"{yellow}1. You will play a series of mini-games.{reset}\n"
+        f"{yellow}2. For each mini-game, you will earn a letter.{reset}\n"
+        f"{yellow}3. If you win the most mini-games, you can decrypt the password in a later stage.{reset}\n"
+        f"{yellow}4. There are a total of 5 mini-games.{reset}\n"
+    )
+
+    print(rules)
+
+
+def print_story() -> None:
+    red = '\033[91m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    reset = '\033[0m'
+    green = '\033[92m'
+
+    pre_story = (
+        f"{red}WARNING: A malicious entity has infiltrated your computer {USER_NAME}!{reset}\n"
+        f"{blue}The Cookie Monster, driven by his hunger for cookies, has spread a virus across your system.{reset}\n"
+        f"{red}Your files are at risk, and he demands the ultimate password to unleash his sugary chaos!{reset}\n"
+        f"{green}You must fight back by playing games to get letters and decrypt the password.{reset}\n"
+        f"{blue}Only then can you save your computer from his cookie-fueled mayhem...{reset}\n"
+    )
+
+    enters = ('\n' * 50)
+    print(enters)
+
+    # Print the pre-story
+    print(pre_story)
+    sleep(15)
+
+
+def print_scary_message() -> None:
+    # ANSI escape codes for colors
+    red = '\033[91m'
+    green = '\033[92m'
+    yellow = '\033[93m'
+    reset = '\033[0m'  # Reset to default color
+
+    # Scary message with styling
+    message = (
+        f"{red}A dark shadow looms behind you, {yellow}{USER_NAME}{red}...{reset}\n"
+        f"{red}Its cold breath whispers your name, but no one is around to hear it.\n"
+        f"{green}You turn around, but all you see is darkness...{reset}\n"
+        f"{red}Will you face it, {yellow}{USER_NAME}{red}? Or will you run into the night?{reset}"
+    )
+
+    print(message)
 
 
 # greeting the user
 def greet_user() -> None:
-    print(f"Hello {USER_NAME}!")
-    sleep(2)
+    print_scary_message()
+    sleep(15)
 
-    print('\nDo you want to play a game? :} ')
+    print(f'\nDo you want to play a game {USER_NAME}? :@ ')
     want_to_play = input('yes or no: ').lower()
 
     sleep(2)
@@ -27,7 +89,6 @@ def greet_user() -> None:
         print('\nWell let\'s play then!')
     else:
         print('\nNo one cares what u want!')
-
 
 # checking if selected action is valid
 def validate_action(action: str) -> bool:
@@ -62,7 +123,26 @@ def get_user_name() -> str:
 
 # printing the scoreboard
 def print_scoreboard() -> None:
-    print('Here comes the scoreboard')
+    print_heading('Scoreboard: ')
+    with open('scoreboard.csv', mode='r') as file:
+        # Read the data into a list and skip the header
+        data = list(csv.reader(file))
+
+    # Sort the data by score (second column), converting scores to integers
+    sorted_data = sorted(data, key=lambda x: int(x[1]), reverse=True)
+
+    # Print table header
+    print(f"{'Name':<15} {'Score':<10} {'Time':<10} {'Difficulty':<10}")
+    print("-" * 55)
+
+    # Print each row in a formatted way
+    for row in sorted_data:
+        # Calculate minutes and seconds
+        minutes = int(float(row[2]) // 60)
+        seconds = int(float(row[2])) % 60
+
+        time = f'{minutes}:{seconds}'
+        print(f"{row[0]:<15} {row[1]:<10} {time:<10} {row[3]:<10}")
 
 # ask user for preferred game mode [easy, medium, hard]
 def get_game_mode() -> str:
@@ -80,7 +160,7 @@ def get_game_mode() -> str:
 
 # ask user for the mini-game that he want to play
 def get_mini_game():
-    print_heading(f'Pick an mini game: (1 - {len(MINI_GAMES)})')
+    print_heading(f'Pick an game: (1 - {len(MINI_GAMES)})')
     game_names = []
 
     i = 1
@@ -116,6 +196,12 @@ def get_action() -> int:
 
     return int(action)
 
+def get_score(games_won: int, time: float) -> int:
+    # Calculate the score
+    score = (games_won * 1000) - (time * 0.1)
+
+    # Ensure the score is non-negative
+    return max(0, int(score))
 
 # play game binarize
 def play_binarize(game_mode) -> bool:
@@ -200,18 +286,23 @@ def start_game(game_mode) -> int:
         mini_game = get_mini_game()
 
         # let user play the game
+        enters = ('\n' * 50)
+        print(enters)
         user_won = mini_game(game_mode)
 
         if user_won:
-            print(f'\033[92mU won this time!\033[0m')
+            print(f'\033[92mU won mini-game, this time!\033[0m')
             total_score += 1
         else:
-            print(f'\033[91mU lost this time!\033[0m')
+            print(f'\033[91mU lost this mini-game!\033[0m')
 
     return total_score
 
-def enter_password() -> None:
-    pass
+def enter_password() -> bool:
+    password = input('Enter password: ')
+    if password.lower() == 'challenge':
+        return True
+    return False
 
 if __name__ == '__main__':
     # all game-modes that we support
@@ -238,9 +329,9 @@ if __name__ == '__main__':
                      'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
         },
         'galley': {
-            'name': 'Galgje',
+            'name': 'Hangman',
             'game': play_galley,
-            'rules': 'Galgje is the Dutch version of Hangman. The objective is to guess a hidden word by suggesting letters. \n'
+            'rules': 'The objective is to guess a hidden word by suggesting letters. \n'
                      'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
                      'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
         },
@@ -261,6 +352,7 @@ if __name__ == '__main__':
         }
     }
 
+    print_rules()
     USER_NAME = get_user_name()
     while True:
         played_games = []
@@ -281,14 +373,30 @@ if __name__ == '__main__':
             game_mode = get_game_mode()
             sleep(1)
 
+            print_story()
+
+            # greet user and print rules of the game
             greet_user()
             sleep(2)
-            print_rules()
 
-            score = start_game(game_mode)
+            # start timer and game
+            start_time = time.time()
+            games_won = start_game(game_mode)
 
-            print(f'TOTAL SCORE: {score}')
-            get_password = enter_password()
+            print_heading("U ALMOST ESCAPED!")
+            print_heading("Now u can put all letters together and try to crack the password!")
+
+            if enter_password():
+                games_won += 10
+
+            end_time = time.time()
+
+            # calculate score
+            score = get_score(games_won, end_time - start_time)
+
+            # save the score
+            save_user_score = save_score(score, end_time - start_time, game_mode)
+
             end_game()
         else:
             continue
