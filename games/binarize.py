@@ -26,7 +26,9 @@ def binarize(game_mode) -> bool:
                 print("Correct!")
                 break
             else:
+                attempts -= 1
                 print(f"incorrect answer, you only have {attempts} tries left...")
+
 
         if attempts <= 0:
             print("you failed, good luck ever getting that password")
