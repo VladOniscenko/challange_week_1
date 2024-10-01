@@ -3,9 +3,8 @@
 Welcome to Horror Adventure, a spine-chilling adventure game where your wits and reflexes will be tested through various mini-games. You must conquer these challenges to uncover the secret code needed to crack the final password and escape!
 🕹️ Gameplay Overview
 
-    Each mini-game you play awards a digit that forms part of a secret password.
-    The password must be cracked at the end to complete the game and escape the horror.
-    But beware: Every mini-game gets more challenging as you progress! 💀
+    Each mini-game you play awards a alphabetical letter that forms part of a secret password.
+    The password must be cracked at the end to complete the game and escape the horror. 💀
 
 🔑 Mini-Games Included:
 
@@ -25,7 +24,7 @@ Welcome to Horror Adventure, a spine-chilling adventure game where your wits and
       Rock Paper Scissors
       
 
-Each mini-game is an opportunity to earn a digit for the password. The final challenge? Crack the password using the digits you've earned!
+Each mini-game is an opportunity to earn a alphabetical letter for the password. The final challenge? Crack the password using the letters you've earned!
 🧠 Are you up for the challenge?
 
 Step into the darkness and prove your skills by mastering each mini-game. Only then will you survive the Horror Adventure!
