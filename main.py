@@ -2,8 +2,9 @@
 from time import sleep
 
 
-#get mini game galgje
+# import mini games
 from games.galgje import galgje
+from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
 
 
@@ -125,20 +126,14 @@ def play_binarize(game_mode) -> bool:
 # play game rock, paper and scissors
 def play_rock_paper_scissors(game_mode) -> bool:
     print_game_rules('rock_paper_scissors')
-
     if rock_paper_scissors(game_mode, USER_NAME):
-        print('\nNot bad, be aware u are not done yet!')
-        print('Here is your letter: B')
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
         sleep(1)
-        print('U are close to die!')
-        sleep(1)
-
     return False
 
 
@@ -150,24 +145,27 @@ def play_encrypter(game_mode) -> bool:
 # plat game galley
 def play_galley(game_mode) -> bool:
     print_game_rules('galley')
-
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: A')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
-        sleep(1)
-        print('U are close to die!')
         sleep(1)
     return False
 
 # plat game math champ
 def play_math_champ(game_mode) -> bool:
-    print('Play play_math_champ')
+    print_game_rules('math_champ')
+    if math_champ(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        sleep(1)
     return False
 
 
@@ -268,6 +266,8 @@ if __name__ == '__main__':
             print_scoreboard()
         elif action == 1:
             score = start_game(game_mode)
+
+            print(f'TOTAL SCORE: {score}')
             get_password = enter_password()
             end_game()
         else:
