@@ -1,4 +1,5 @@
 # import sleep to show output for some time period
+import time
 from time import sleep
 import csv
 
@@ -7,13 +8,11 @@ from games.galgje import galgje
 from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
 
-def save_score(score):
-    time = '9:54'
-
+def save_score(score: int, time: float, game_mode: str) -> None:
     # Open the file in append mode and write the data
     with open('scoreboard.csv', mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow([USER_NAME, score, time])
+        writer.writerow([USER_NAME, score, int(time), game_mode])
 
 
 # printing rules of the game in console
@@ -79,12 +78,17 @@ def print_scoreboard() -> None:
     sorted_data = sorted(data, key=lambda x: int(x[1]), reverse=True)
 
     # Print table header
-    print(f"{'Name':<15} {'Score':<10} {'Time':<10}")
-    print("-" * 35)
+    print(f"{'Name':<15} {'Score':<10} {'Time':<10} {'Difficulty':<10}")
+    print("-" * 55)
 
     # Print each row in a formatted way
     for row in sorted_data:
-        print(f"{row[0]:<15} {row[1]:<10} {row[2]:<10}")
+        # Calculate minutes and seconds
+        minutes = int(float(row[2]) // 60)
+        seconds = int(float(row[2])) % 60
+
+        time = f'{minutes}:{seconds}'
+        print(f"{row[0]:<15} {row[1]:<10} {time:<10} {row[3]:<10}")
 
 # ask user for preferred game mode [easy, medium, hard]
 def get_game_mode() -> str:
@@ -138,8 +142,12 @@ def get_action() -> int:
 
     return int(action)
 
-def get_score(games_won: int) -> int:
-    return games_won * 250
+def get_score(games_won: int, time: float) -> int:
+    # Calculate the score
+    score = (games_won * 1000) - (time * 0.1)
+
+    # Ensure the score is non-negative
+    return max(0, int(score))
 
 # play game binarize
 def play_binarize(game_mode) -> bool:
@@ -309,10 +317,13 @@ if __name__ == '__main__':
             sleep(2)
             print_rules()
 
+            start_time = time.time()
             games_won = start_game(game_mode)
-            score = get_score(games_won)
+            end_time = time.time()
 
-            save_user_score = save_score(score)
+            score = get_score(games_won, end_time - start_time)
+
+            save_user_score = save_score(score, end_time - start_time, game_mode)
 
             get_password = enter_password()
             end_game()
