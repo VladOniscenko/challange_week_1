@@ -1,6 +1,5 @@
 # todo fix time in scoreboard
 # todo print something after password input correct or incorrect?
-# todo we need to replace an X from won games to real letters from the password
 # todo import 2 other mini games
 
 
@@ -217,7 +216,7 @@ def play_binarize(game_mode) -> bool:
 
     if binarize(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: cha')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -231,7 +230,7 @@ def play_rock_paper_scissors(game_mode) -> bool:
     print_game_rules('rock_paper_scissors')
     if rock_paper_scissors(game_mode, USER_NAME):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: ll')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -245,7 +244,7 @@ def play_encrypter(game_mode) -> bool:
     print_game_rules('encrypter')
     if encrypter(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: en')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -260,7 +259,7 @@ def play_galley(game_mode) -> bool:
     print_game_rules('galley')
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: g')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -273,7 +272,7 @@ def play_math_champ(game_mode) -> bool:
     print_game_rules('math_champ')
     if math_champ(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: e')
         print('Don\'t forget it :}')
         sleep(2)
         return True
