@@ -345,8 +345,9 @@ if __name__ == '__main__':
         'encrypter': {
             'name': 'Encrypter',
             'game': play_encrypter,
-            'rules': 'Encrypter challenges you to decode or encode a given string using a specific encryption method, \n'
-                     'like Caesar cipher or a substitution cipher. Your goal is to either crack the encrypted message \n'
+            'rules': 'Encrypter challenges you to decode a message using a specific encryption method, \n'
+                     'The only clue C. Monster has left to decode the message is the following \n'
+                     '\"only HEXES will save you, B=2\" \n'
                      'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
         },
         'galley': {
