@@ -1,25 +1,92 @@
-# import only system from os
-from os import system, name
+# todo fix time in scoreboard
+# todo print something after password input correct or incorrect?
+# todo we need to replace an X from won games to real letters from the password
+# todo import 2 other mini games
+
 
 # import sleep to show output for some time period
+import time
 from time import sleep
+import csv
 
-
-#get mini game galgje
+# import mini games
 from games.galgje import galgje
+from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
 
+def save_score(score: int, time: float, game_mode: str) -> None:
+    # Open the file in append mode and write the data
+    with open('scoreboard.csv', mode='a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow([USER_NAME, score, int(time), game_mode])
+
 # printing rules of the game in console
-def print_rules() -> None:
-    print('Here come the rules of the game')
+def print_rules():
+    red = '\033[91m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    reset = '\033[0m'
+    green = '\033[92m'
+
+    # Game rules
+    rules = (
+        f"{red}Game rules:{reset}\n"
+        f"{yellow}1. You will play a series of mini-games.{reset}\n"
+        f"{yellow}2. For each mini-game, you will earn a letter.{reset}\n"
+        f"{yellow}3. If you win the most mini-games, you can decrypt the password in a later stage.{reset}\n"
+        f"{yellow}4. There are a total of 5 mini-games.{reset}\n"
+    )
+
+    print(rules)
+
+
+def print_story() -> None:
+    red = '\033[91m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    reset = '\033[0m'
+    green = '\033[92m'
+
+    pre_story = (
+        f"{red}WARNING: A malicious entity has infiltrated your computer {USER_NAME}!{reset}\n"
+        f"{blue}The Cookie Monster, driven by his hunger for cookies, has spread a virus across your system.{reset}\n"
+        f"{red}Your files are at risk, and he demands the ultimate password to unleash his sugary chaos!{reset}\n"
+        f"{green}You must fight back by playing games to get letters and decrypt the password.{reset}\n"
+        f"{blue}Only then can you save your computer from his cookie-fueled mayhem...{reset}\n"
+    )
+
+    enters = ('\n' * 50)
+    print(enters)
+
+    # Print the pre-story
+    print(pre_story)
+    sleep(15)
+
+
+def print_scary_message() -> None:
+    # ANSI escape codes for colors
+    red = '\033[91m'
+    green = '\033[92m'
+    yellow = '\033[93m'
+    reset = '\033[0m'  # Reset to default color
+
+    # Scary message with styling
+    message = (
+        f"{red}A dark shadow looms behind you, {yellow}{USER_NAME}{red}...{reset}\n"
+        f"{red}Its cold breath whispers your name, but no one is around to hear it.\n"
+        f"{green}You turn around, but all you see is darkness...{reset}\n"
+        f"{red}Will you face it, {yellow}{USER_NAME}{red}? Or will you run into the night?{reset}"
+    )
+
+    print(message)
 
 
 # greeting the user
 def greet_user() -> None:
-    print(f"Hello {USER_NAME}!")
-    sleep(2)
+    print_scary_message()
+    sleep(15)
 
-    print('\nDo you want to play a game? :} ')
+    print(f'\nDo you want to play a game {USER_NAME}? :@ ')
     want_to_play = input('yes or no: ').lower()
 
     sleep(2)
@@ -28,7 +95,6 @@ def greet_user() -> None:
         print('\nWell let\'s play then!')
     else:
         print('\nNo one cares what u want!')
-
 
 # checking if selected action is valid
 def validate_action(action: str) -> bool:
@@ -63,7 +129,26 @@ def get_user_name() -> str:
 
 # printing the scoreboard
 def print_scoreboard() -> None:
-    print('Here comes the scoreboard')
+    print_heading('Scoreboard: ')
+    with open('scoreboard.csv', mode='r') as file:
+        # Read the data into a list and skip the header
+        data = list(csv.reader(file))
+
+    # Sort the data by score (second column), converting scores to integers
+    sorted_data = sorted(data, key=lambda x: int(x[1]), reverse=True)
+
+    # Print table header
+    print(f"{'Name':<15} {'Score':<10} {'Time':<10} {'Difficulty':<10}")
+    print("-" * 55)
+
+    # Print each row in a formatted way
+    for row in sorted_data:
+        # Calculate minutes and seconds
+        minutes = int(float(row[2]) // 60)
+        seconds = int(float(row[2])) % 60
+
+        time = f'{minutes}:{seconds}'
+        print(f"{row[0]:<15} {row[1]:<10} {time:<10} {row[3]:<10}")
 
 # ask user for preferred game mode [easy, medium, hard]
 def get_game_mode() -> str:
@@ -81,7 +166,7 @@ def get_game_mode() -> str:
 
 # ask user for the mini-game that he want to play
 def get_mini_game():
-    print_heading(f'Pick an mini game: (1 - {len(MINI_GAMES)})')
+    print_heading(f'Pick an game: (1 - {len(MINI_GAMES)})')
     game_names = []
 
     i = 1
@@ -117,6 +202,12 @@ def get_action() -> int:
 
     return int(action)
 
+def get_score(games_won: int, time: float) -> int:
+    # Calculate the score
+    score = (games_won * 1000) - (time * 0.1)
+
+    # Ensure the score is non-negative
+    return max(0, int(score))
 
 # play game binarize
 def play_binarize(game_mode) -> bool:
@@ -127,20 +218,14 @@ def play_binarize(game_mode) -> bool:
 # play game rock, paper and scissors
 def play_rock_paper_scissors(game_mode) -> bool:
     print_game_rules('rock_paper_scissors')
-
     if rock_paper_scissors(game_mode, USER_NAME):
-        print('\nNot bad, be aware u are not done yet!')
-        print('Here is your letter: B')
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
         sleep(1)
-        print('U are close to die!')
-        sleep(1)
-
     return False
 
 
@@ -152,24 +237,27 @@ def play_encrypter(game_mode) -> bool:
 # plat game galley
 def play_galley(game_mode) -> bool:
     print_game_rules('galley')
-
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: A')
+        print('Here is your letter: X')
         print('Don\'t forget it :}')
         sleep(2)
         return True
     else:
-        print('\nHow do u feel to be an loser?')
-
-        sleep(1)
-        print('U are close to die!')
         sleep(1)
     return False
 
 # plat game math champ
 def play_math_champ(game_mode) -> bool:
-    print('Play play_math_champ')
+    print_game_rules('math_champ')
+    if math_champ(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        sleep(1)
     return False
 
 
@@ -179,17 +267,11 @@ def print_heading(heading) -> None:
 
 
 def print_game_rules(game_name) -> None:
-    # todo print here the rules of each game
+    print(f'\033[93m{MINI_GAMES[game_name]["rules"]}\033[0m')
 
-    sleep(1)
+    sleep(4)
     print("\nLets start the game :)")
-    sleep(2)
-
-
-# processing the game end
-def end_game() -> None:
-    pass
-
+    sleep(1)
 
 # processing the gameplay
 def start_game(game_mode) -> int:
@@ -204,15 +286,23 @@ def start_game(game_mode) -> int:
         mini_game = get_mini_game()
 
         # let user play the game
+        enters = ('\n' * 50)
+        print(enters)
         user_won = mini_game(game_mode)
 
         if user_won:
+            print(f'\033[92mU won mini-game, this time!\033[0m')
             total_score += 1
+        else:
+            print(f'\033[91mU lost this mini-game!\033[0m')
 
     return total_score
 
-def enter_password() -> None:
-    pass
+def enter_password() -> bool:
+    password = input('Enter password: ')
+    if password.lower() == 'challenge':
+        return True
+    return False
 
 if __name__ == '__main__':
     # all game-modes that we support
@@ -227,38 +317,48 @@ if __name__ == '__main__':
         'binarize': {
             'name': 'Binarize',
             'game': play_binarize,
+            'rules': 'In Binarize, you are tasked with converting decimal numbers into binary. \n'
+                     'You will be given random decimal numbers, and your job is to accurately convert \n'
+                     'them to their binary equivalents. Test your knowledge of binary conversions\n'
         },
         'encrypter': {
             'name': 'Encrypter',
             'game': play_encrypter,
+            'rules': 'Encrypter challenges you to decode or encode a given string using a specific encryption method, \n'
+                     'like Caesar cipher or a substitution cipher. Your goal is to either crack the encrypted message \n'
+                     'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
         },
         'galley': {
-            'name': 'Galley',
+            'name': 'Hangman',
             'game': play_galley,
+            'rules': 'The objective is to guess a hidden word by suggesting letters. \n'
+                     'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
+                     'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
         },
         'math_champ': {
             'name': 'Math Champ',
             'game': play_math_champ,
+            'rules': 'In Math Champ, you will face equations like A + A = 4 or B + A = 7. Your task is to deduce the values \n'
+                     'of the variables (A, B, etc.) by solving these equations. The game will challenge your logical thinking \n'
+                     'and problem-solving skills as you figure out the correct values for the variables!\n'
+
         },
         'rock_paper_scissors': {
             'name': 'Rock Paper Scissors',
             'game': play_rock_paper_scissors,
+            'rules': 'Rock Paper Scissors is a classic game of chance where you play against the computer. \n'
+                     'Choose rock, paper, or scissors and see if you can outwit the computer. Rock beats scissors, \n'
+                     'scissors beats paper, and paper beats rock. Win the best of three rounds to claim victory!\n'
         }
     }
 
+    print_rules()
     USER_NAME = get_user_name()
     while True:
         played_games = []
         action = get_action()
 
         sleep(1)
-        # ask for game mode easy, medium or hard
-        game_mode = get_game_mode()
-        sleep(1)
-
-        greet_user()
-        sleep(2)
-        print_rules()
 
         if action == 3:
             print('\033[91mWe know that u are scared!\033[0m')
@@ -269,8 +369,33 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
-            score = start_game(game_mode)
-            enter_password = enter_password()
-            end_game()
+            # ask for game mode easy, medium or hard
+            game_mode = get_game_mode()
+            sleep(1)
+
+            print_story()
+
+            # greet user and print rules of the game
+            greet_user()
+            sleep(2)
+
+            # start timer and game
+            start_time = time.time()
+            games_won = start_game(game_mode)
+
+            print_heading("U ALMOST ESCAPED!")
+            print_heading("Now u can put all letters together and try to crack the password!")
+
+            if enter_password():
+                games_won += 10
+                # todo print some text
+
+            end_time = time.time()
+
+            # calculate score
+            score = get_score(games_won, end_time - start_time)
+
+            # save the score
+            save_user_score = save_score(score, end_time - start_time, game_mode)
         else:
             continue
