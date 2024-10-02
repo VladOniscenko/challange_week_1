@@ -63,7 +63,8 @@ def galgje(game_mode) -> bool:
     # while loop until attempts smaller then i
     while i < attempts:
         if user_guessed(word, correct_chars):
-            print_ans(f'{green}U guessed it! Word: {word}{reset}')
+            print_ans(word, correct_chars)
+            print(f'{green}U guessed it! Word: {word}{reset}')
             break
 
         attempt_number = i + 1
@@ -100,6 +101,7 @@ def galgje(game_mode) -> bool:
     # display game results
     if user_guessed(word, correct_chars):
         return True
+    print(f'The word was {word}')
     return False
 
 if __name__ == '__main__':
