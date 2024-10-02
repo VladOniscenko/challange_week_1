@@ -283,6 +283,7 @@ def print_heading(heading) -> None:
 def print_game_rules(game_name) -> None:
     print(f'\033[93m{MINI_GAMES[game_name]["rules"]}\033[0m')
 
+    input('\nPress enter to continue: ')
     sleep(4)
     print("\nLets start the game :)")
     sleep(1)
