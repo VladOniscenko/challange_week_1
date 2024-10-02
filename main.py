@@ -13,6 +13,8 @@ import csv
 from games.galgje import galgje
 from games.math_champ import math_champ
 from games.rock_paper_scissors import rock_paper_scissors
+from games.encrypter import encrypter
+from games.binarize import binarize
 
 def save_score(score: int, time: float, game_mode: str) -> None:
     # Open the file in append mode and write the data
@@ -212,6 +214,15 @@ def get_score(games_won: int, time: float) -> int:
 # play game binarize
 def play_binarize(game_mode) -> bool:
     print_game_rules('binarize')
+
+    if binarize(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        sleep(1)
     return False
 
 
@@ -232,6 +243,16 @@ def play_rock_paper_scissors(game_mode) -> bool:
 # play game encrypter
 def play_encrypter(game_mode) -> bool:
     print_game_rules('encrypter')
+    if encrypter(game_mode):
+        print('\nHmm, you got me this time, it will not happen again!')
+        print('Here is your letter: X')
+        print('Don\'t forget it :}')
+        sleep(2)
+        return True
+    else:
+        sleep(1)
+
+
     return False
 
 # plat game galley
