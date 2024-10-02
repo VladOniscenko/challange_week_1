@@ -1,5 +1,13 @@
+import random
+
+red = '\033[91m'
+reset = '\033[0m'
+green = '\033[92m'
+yellow = '\033[93m'
+
 def galgje(game_mode) -> bool:
-    correct_chars, incorrect_chars = [], []
+    correct_chars = []
+    incorrect_chars = []
 
     # check if all character are guessed / return true/false || win/or not yet
     def user_guessed(word, correct_chars):
@@ -33,15 +41,9 @@ def galgje(game_mode) -> bool:
         print(''.join(srow))
         print(''.join(throw))
 
-    attempts = 7
+    attempts = 8
     i = 0
 
-    import random
-    red = '\033[91m'
-    yellow = '\033[93m'
-    blue = '\033[94m'
-    reset = '\033[0m'
-    green = '\033[92m'
     # Galgje game modes
     galgje_modes = {
         'easy': {
@@ -62,38 +64,36 @@ def galgje(game_mode) -> bool:
 
     # while loop until attempts smaller then i
     while i < attempts:
+        i += 1
         if user_guessed(word, correct_chars):
             print_ans(word, correct_chars)
             print(f'{green}U guessed it! Word: {word}{reset}')
             break
 
-        attempt_number = i + 1
-
         # while loop until I get valid input
         while True:
-            attempt = input("Attempt " + str(attempt_number) + ": ")
-            if not attempt:
-                attempt = input("Attempt " + str(attempt_number) + ": ")
-            else:
-                attempt = attempt[0].lower()
+            letter = input("Fill an letter in: ")
+            if letter.isalpha() and len(letter) == 1:
+                letter = letter.lower()
                 break
+            else:
+                print(f'{red}Input error{reset}')
 
         # check if character already was used and is in the word or not in it
-        if attempt in word:
-            if attempt in correct_chars:
-                print(attempt + " already guessed!")
-                i = i - 1
+        if letter in word:
+            if letter in correct_chars:
+                print(letter + " already guessed!")
+                i -= 1
             else:
-                print(f'{green}{attempt} is in word!{reset}')
-                correct_chars.append(attempt)
+                print(f'{green}{letter} is in word!{reset}')
+                correct_chars.append(letter)
         else:
-
-            if attempt in incorrect_chars:
-                print(attempt + " was already used!")
+            if letter in incorrect_chars:
+                print(f"Letter {letter} was already used!")
             else:
-                incorrect_chars.append(attempt)
-                print(f"{red}AHH, " + attempt + f" is not in the word!{reset}")
-                i += 1
+                incorrect_chars.append(letter)
+                print(f"{red}AHH, {letter} is not in the word!{reset}")
+
         # print attempt results
         print_ans(word, correct_chars)
 
@@ -101,7 +101,8 @@ def galgje(game_mode) -> bool:
     # display game results
     if user_guessed(word, correct_chars):
         return True
-    print(f'The word was {word}')
+    else:
+        print(f'{yellow}The word was {word}{yellow}')
     return False
 
 if __name__ == '__main__':
