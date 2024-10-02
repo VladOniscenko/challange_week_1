@@ -273,7 +273,6 @@ def print_game_rules(game_name) -> None:
     print(f'\033[93m{MINI_GAMES[game_name]["rules"]}{reset}')
 
     input('\nPress enter to continue: ')
-    sleep(4)
     print("\nLets start the game :)")
     sleep(1)
 
@@ -339,6 +338,7 @@ if __name__ == '__main__':
             'rules': 'The objective is to guess a hidden word by suggesting letters. \n'
                      'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
                      'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
+                     'U will have 7 attempts!\n'
         },
         'math_champ': {
             'name': 'Math Champ',
