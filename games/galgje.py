@@ -37,7 +37,11 @@ def galgje(game_mode) -> bool:
     i = 0
 
     import random
-
+    red = '\033[91m'
+    yellow = '\033[93m'
+    blue = '\033[94m'
+    reset = '\033[0m'
+    green = '\033[92m'
     # Galgje game modes
     galgje_modes = {
         'easy': {
@@ -59,6 +63,8 @@ def galgje(game_mode) -> bool:
     # while loop until attempts smaller then i
     while i < attempts:
         if user_guessed(word, correct_chars):
+            print_ans(word, correct_chars)
+            print(f'{green}U guessed it! Word: {word}{reset}')
             break
 
         attempt_number = i + 1
@@ -78,7 +84,7 @@ def galgje(game_mode) -> bool:
                 print(attempt + " already guessed!")
                 i = i - 1
             else:
-                print(attempt + " is in word!")
+                print(f'{green}{attempt} is in word!{reset}')
                 correct_chars.append(attempt)
         else:
 
@@ -86,7 +92,7 @@ def galgje(game_mode) -> bool:
                 print(attempt + " was already used!")
             else:
                 incorrect_chars.append(attempt)
-                print("AHH, " + attempt + " is not in the word!")
+                print(f"{red}AHH, " + attempt + f" is not in the word!{reset}")
                 i += 1
         # print attempt results
         print_ans(word, correct_chars)
@@ -95,4 +101,8 @@ def galgje(game_mode) -> bool:
     # display game results
     if user_guessed(word, correct_chars):
         return True
+    print(f'The word was {word}')
     return False
+
+if __name__ == '__main__':
+    galgje('easy')

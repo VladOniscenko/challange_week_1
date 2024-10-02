@@ -1,11 +1,6 @@
-# todo fix time in scoreboard
-# todo print something after password input correct or incorrect?
-# todo we need to replace an X from won games to real letters from the password
-# todo import 2 other mini games
-
-
 # import sleep to show output for some time period
 import time
+from cgitb import reset
 from time import sleep
 import csv
 
@@ -217,7 +212,7 @@ def play_binarize(game_mode) -> bool:
 
     if binarize(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: cha')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -231,7 +226,7 @@ def play_rock_paper_scissors(game_mode) -> bool:
     print_game_rules('rock_paper_scissors')
     if rock_paper_scissors(game_mode, USER_NAME):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: ll')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -245,7 +240,7 @@ def play_encrypter(game_mode) -> bool:
     print_game_rules('encrypter')
     if encrypter(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: en')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -260,7 +255,7 @@ def play_galley(game_mode) -> bool:
     print_game_rules('galley')
     if galgje(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: g')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -273,7 +268,7 @@ def play_math_champ(game_mode) -> bool:
     print_game_rules('math_champ')
     if math_champ(game_mode):
         print('\nHmm, you got me this time, it will not happen again!')
-        print('Here is your letter: X')
+        print('Here is your letter: e')
         print('Don\'t forget it :}')
         sleep(2)
         return True
@@ -391,6 +386,11 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
+            red = '\033[91m'
+            yellow = '\033[93m'
+            blue = '\033[94m'
+            reset = '\033[0m'
+            green = '\033[92m'
             # ask for game mode easy, medium or hard
             game_mode = get_game_mode()
             sleep(1)
@@ -410,7 +410,9 @@ if __name__ == '__main__':
 
             if enter_password():
                 games_won += 10
-                # todo print some text
+                print(f'{green}Password is correct! THE END! {reset}')
+            else:
+                print(f'{red}Password was incorrect! THE END! {reset}')
 
             end_time = time.time()
 
