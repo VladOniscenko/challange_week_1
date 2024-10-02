@@ -1,7 +1,5 @@
 # import sleep to show output for some time period
-import time
-from cgitb import reset
-from time import sleep
+from time import sleep, time
 import csv
 
 # import mini games
@@ -57,7 +55,7 @@ def print_story() -> None:
 
     # Print the pre-story
     print(pre_story)
-    sleep(15)
+    sleep(5)
 
 
 def print_scary_message() -> None:
@@ -81,7 +79,7 @@ def print_scary_message() -> None:
 # greeting the user
 def greet_user() -> None:
     print_scary_message()
-    sleep(15)
+    sleep(5)
 
     print(f'\nDo you want to play a game {USER_NAME}? :@ ')
     want_to_play = input('yes or no: ').lower()
@@ -402,7 +400,7 @@ if __name__ == '__main__':
             sleep(2)
 
             # start timer and game
-            start_time = time.time()
+            start_time = time()
             games_won = start_game(game_mode)
 
             print_heading("U ALMOST ESCAPED!")
@@ -414,7 +412,7 @@ if __name__ == '__main__':
             else:
                 print(f'{red}Password was incorrect! THE END! {reset}')
 
-            end_time = time.time()
+            end_time = time()
 
             # calculate score
             score = get_score(games_won, end_time - start_time)
