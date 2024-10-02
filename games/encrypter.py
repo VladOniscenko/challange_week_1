@@ -22,7 +22,7 @@ def encrypter(game_mode) -> bool:
 
         while attempts > 0:
             print(question)
-            guess = input("vul het geïncrypte antwoord in \n")
+            guess = input("Fill in the decrypted word \n")
             if not guess.isalpha():
                 print("The answer has to be a word")
             elif guess.upper() == answer:
