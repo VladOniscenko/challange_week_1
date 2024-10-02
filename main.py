@@ -9,6 +9,13 @@ from games.rock_paper_scissors import rock_paper_scissors
 from games.encrypter import encrypter
 from games.binarize import binarize
 
+red = '\033[91m'
+green = '\033[92m'
+yellow = '\033[93m'
+reset = '\033[0m'
+blue = '\033[94m'
+
+
 def save_score(score: int, time: float, game_mode: str) -> None:
     # Open the file in append mode and write the data
     with open('scoreboard.csv', mode='a', newline='') as file:
@@ -17,12 +24,6 @@ def save_score(score: int, time: float, game_mode: str) -> None:
 
 # printing rules of the game in console
 def print_rules():
-    red = '\033[91m'
-    yellow = '\033[93m'
-    blue = '\033[94m'
-    reset = '\033[0m'
-    green = '\033[92m'
-
     # Game rules
     rules = (
         f"{red}Game rules:{reset}\n"
@@ -36,12 +37,6 @@ def print_rules():
 
 
 def print_story() -> None:
-    red = '\033[91m'
-    yellow = '\033[93m'
-    blue = '\033[94m'
-    reset = '\033[0m'
-    green = '\033[92m'
-
     pre_story = (
         f"{red}WARNING: A malicious entity has infiltrated your computer {USER_NAME}!{reset}\n"
         f"{blue}The Cookie Monster, driven by his hunger for cookies, has spread a virus across your system.{reset}\n"
@@ -59,12 +54,6 @@ def print_story() -> None:
 
 
 def print_scary_message() -> None:
-    # ANSI escape codes for colors
-    red = '\033[91m'
-    green = '\033[92m'
-    yellow = '\033[93m'
-    reset = '\033[0m'  # Reset to default color
-
     # Scary message with styling
     message = (
         f"{red}A dark shadow looms behind you, {yellow}{USER_NAME}{red}...{reset}\n"
@@ -167,7 +156,7 @@ def get_mini_game():
     i = 1
     for game_name in MINI_GAMES:
         if game_name in played_games:
-            print(f'\033[91m{i}: {MINI_GAMES[game_name]["name"]}\033[0m')
+            print(f'{red}{i}: {MINI_GAMES[game_name]["name"]}{reset}')
         else:
             print(f'{i}: {MINI_GAMES[game_name]["name"]}')
 
@@ -277,11 +266,11 @@ def play_math_champ(game_mode) -> bool:
 
 # prints the heading in selected color
 def print_heading(heading) -> None:
-    print(f'\n\033[95m{heading}\033[0m')
+    print(f'\n\033[95m{heading}{reset}')
 
 
 def print_game_rules(game_name) -> None:
-    print(f'\033[93m{MINI_GAMES[game_name]["rules"]}\033[0m')
+    print(f'\033[93m{MINI_GAMES[game_name]["rules"]}{reset}')
 
     input('\nPress enter to continue: ')
     sleep(4)
@@ -306,10 +295,10 @@ def start_game(game_mode) -> int:
         user_won = mini_game(game_mode)
 
         if user_won:
-            print(f'\033[92mU won mini-game, this time!\033[0m')
+            print(f'\033[92mU won mini-game, this time!{reset}')
             total_score += 1
         else:
-            print(f'\033[91mU lost this mini-game!\033[0m')
+            print(f'{red}U lost this mini-game!{reset}')
 
     return total_score
 
@@ -377,19 +366,14 @@ if __name__ == '__main__':
         sleep(1)
 
         if action == 3:
-            print('\033[91mWe know that u are scared!\033[0m')
+            print(f'{red}We know that u are scared!{reset}')
             sleep(2)
-            print('\033[91mDon\'t worry we will get you next time! ;}\033[0m')
+            print(f'{red}Don\'t worry we will get you next time! ;){reset}')
             exit()
 
         elif action == 2:
             print_scoreboard()
         elif action == 1:
-            red = '\033[91m'
-            yellow = '\033[93m'
-            blue = '\033[94m'
-            reset = '\033[0m'
-            green = '\033[92m'
             # ask for game mode easy, medium or hard
             game_mode = get_game_mode()
             sleep(1)
@@ -419,6 +403,6 @@ if __name__ == '__main__':
             score = get_score(games_won, end_time - start_time)
 
             # save the score
-            save_user_score = save_score(score, end_time - start_time, game_mode)
+            save_score(score, end_time - start_time, game_mode)
         else:
             continue
