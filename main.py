@@ -1,6 +1,3 @@
-# todo fix time in scoreboard
-# todo print something after password input correct or incorrect?
-
 # import sleep to show output for some time period
 import time
 from cgitb import reset
