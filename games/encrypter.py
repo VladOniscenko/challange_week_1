@@ -1,10 +1,18 @@
 # encryption HEX
 def encrypter(game_mode) -> bool:
     hex_easy_options = {"YOU": "19-F-15"}
-    hex_hard_options = {"HERE": "28-F-32-S",
-                        "THERE": "23-SD-32-33-23"}
+
+    hex_medium_options = {"I": "9",
+                          "SEE":"13-5-5",
+                          "YOU":"19-F-15"}
+
+    hex_hard_options = {"YOUR": "19-F-15-12",
+                        "DATA": "4-1-14-1",
+                        "IS": "9-13",
+                        "MINE":"D-9-E-5"}
     hex_options = {
         'easy': hex_easy_options,
+        'medium':hex_medium_options,
         'hard': hex_hard_options
     }
 
