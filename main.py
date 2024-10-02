@@ -1,10 +1,9 @@
 # todo fix time in scoreboard
 # todo print something after password input correct or incorrect?
-# todo import 2 other mini games
-
 
 # import sleep to show output for some time period
 import time
+from cgitb import reset
 from time import sleep
 import csv
 
@@ -389,6 +388,11 @@ if __name__ == '__main__':
         elif action == 2:
             print_scoreboard()
         elif action == 1:
+            red = '\033[91m'
+            yellow = '\033[93m'
+            blue = '\033[94m'
+            reset = '\033[0m'
+            green = '\033[92m'
             # ask for game mode easy, medium or hard
             game_mode = get_game_mode()
             sleep(1)
@@ -408,7 +412,9 @@ if __name__ == '__main__':
 
             if enter_password():
                 games_won += 10
-                # todo print some text
+                print(f'{green}Password is correct! THE END! {reset}')
+            else:
+                print(f'{red}Password was incorrect! THE END! {reset}')
 
             end_time = time.time()
 
