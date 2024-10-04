@@ -343,7 +343,7 @@ if __name__ == '__main__':
             'rules': 'Encrypter challenges you to decode a message using a specific encryption method, \n'
                      'The only clue C. Monster has left to decode the message is the following \n'
                      '\"only HEXES will save you, B=2\" \n'
-                     'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
+                     'decode the message based on the hints. Sharpen your cryptography skills!\n'
         },
         'galley': {
             'name': 'Hangman',
