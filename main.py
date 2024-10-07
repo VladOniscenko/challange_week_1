@@ -15,55 +15,11 @@ yellow = '\033[93m'
 reset = '\033[0m'
 blue = '\033[94m'
 
-
 # all game-modes that we support
 GAME_MODES = {
     1: 'Easy',
     2: 'Medium',
     3: 'Hard'
-}
-
-
-# all mini-games that we have
-MINI_GAMES = {
-    'binarize': {
-        'name': 'Binarize',
-        'game': play_binarize,
-        'rules': 'In Binarize, you are tasked with converting decimal numbers into binary. \n'
-                 'You will be given random decimal numbers, and your job is to accurately convert \n'
-                 'them to their binary equivalents. Test your knowledge of binary conversions\n'
-    },
-    'encrypter': {
-        'name': 'Encrypter',
-        'game': play_encrypter,
-        'rules': 'Encrypter challenges you to decode a message using a specific encryption method, \n'
-                 'The only clue C. Monster has left to decode the message is the following \n'
-                 '\"only HEXES will save you, B=2\" \n'
-                 'or encode a message based on the rules provided. Sharpen your cryptography skills!\n'
-    },
-    'galley': {
-        'name': 'Hangman',
-        'game': play_galley,
-        'rules': 'The objective is to guess a hidden word by suggesting letters. \n'
-                 'Each incorrect guess brings the stickman closer to being "hanged." You must guess the word before the man \n'
-                 'is fully drawn. It’s a fun word-guessing game that tests your vocabulary and strategic thinking!\n'
-                 'U will have 7 attempts!\n'
-    },
-    'math_champ': {
-        'name': 'Math Champ',
-        'game': play_math_champ,
-        'rules': 'In Math Champ, you will face equations like A + A = 4 or B + A = 7. Your task is to deduce the values \n'
-                 'of the variables (A, B, etc.) by solving these equations. The game will challenge your logical thinking \n'
-                 'and problem-solving skills as you figure out the correct values for the variables!\n'
-
-    },
-    'rock_paper_scissors': {
-        'name': 'Rock Paper Scissors',
-        'game': play_rock_paper_scissors,
-        'rules': 'Rock Paper Scissors is a classic game of chance where you play against the computer. \n'
-                 'Choose rock, paper, or scissors and see if you can outwit the computer. Rock beats scissors, \n'
-                 'scissors beats paper, and paper beats rock. Win the best of three rounds to claim victory!\n'
-    }
 }
 
 
@@ -359,13 +315,6 @@ def enter_password() -> bool:
     return False
 
 if __name__ == '__main__':
-    # all game-modes that we support
-    GAME_MODES = {
-        1: 'Easy',
-        2: 'Medium',
-        3: 'Hard'
-    }
-
     # all mini-games that we have
     MINI_GAMES = {
         'binarize': {
